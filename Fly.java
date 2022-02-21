@@ -7,8 +7,8 @@ public class Fly {
     private double mass;
     private double speed;
 
-    public static final int DEFAULT_MASS = 5;
-    public static final int DEFAULT_SPEED = 10;
+    private static final int DEFAULT_MASS = 5;
+    private static final int DEFAULT_SPEED = 10;
 
     /**
      * Default Fly constructor
@@ -18,17 +18,17 @@ public class Fly {
     }
 
     /**
-     * Constructor can set mass
-     * @param initMass sets mass
+     * Can set mass
+     * @param mass number
      */
-    public Fly(double initMass) {
-        this(initMass, DEFAULT_SPEED);
+    public Fly(double mass) {
+        this(mass, DEFAULT_SPEED);
     }
 
     /**
      * Advance Fly constructor
-     * @param mass sets mass
-     * @param speed sets speed
+     * @param mass first number
+     * @param speed second number
      */
     public Fly(double mass, double speed) {
         this.mass = mass;
@@ -37,34 +37,27 @@ public class Fly {
 
     /**
      * Adds mass and speed
-     * @param addMass adds mass
+     * @param addMass number
      */
     public void grow(int addMass) {
-//        System.out.print("Adding " + addMass + "g to " + mass + "g:");
-        mass += addMass;
-//        System.out.println(" Mass Now " + mass + "g");
-
-        if (mass < 20) {
-//            System.out.println("Adding " + addMass + "m/s to " + speed + "m/s:");
-            speed += addMass;
-        } else {
-//            System.out.println("Subtracting " + (addMass/2.0) + " m/s from " + speed + "m/s:");
-            speed -= 0.5 * (mass - 20);
+        while (addMass > 0) {
+            if (mass < 20) {
+                speed++;
+            }
+            if (mass >= 20) {
+                speed -= 0.5;
+            }
+            mass++;
+            addMass--;
         }
-//        System.out.println("Speed now " + speed + "m/s");
     }
 
     /**
      * Checks if dead
-     * @return if dead
+     * @return boolean
      */
     public boolean isDead() {
-        boolean noMass = false;
-        if (mass == 0) {
-//            System.out.println("Dead");
-            noMass = true;
-        }
-        return noMass;
+        return mass == 0;
     }
 
     /**
@@ -83,7 +76,7 @@ public class Fly {
 
     /**
      * get speed
-     * @return speed
+     * @return double
      */
     public final double getSpeed() {
         return speed;
@@ -91,7 +84,7 @@ public class Fly {
 
     /**
      * sets speed
-     * @param speed new speed
+     * @param speed number
      */
     public final void setSpeed(double speed) {
         this.speed = speed;
@@ -99,7 +92,7 @@ public class Fly {
 
     /**
      * gets mass
-     * @return mass
+     * @return number
      */
     public final double getMass() {
         return mass;
@@ -107,9 +100,10 @@ public class Fly {
 
     /**
      * sets mass
-     * @param mass new mass
+     * @param mass number
      */
     public final void setMass(double mass) {
         this.mass = mass;
     }
+
 }

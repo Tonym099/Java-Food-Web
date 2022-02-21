@@ -8,29 +8,29 @@ public class Frog {
     private int age;
     private double tongueSpeed;
     private boolean isFroglet;
-    private String species = "Rare Pepe";
+    private static String species = "Rare Pepe";
 
-    public static final int DEFAULT_AGE = 5;
-    public static final double DEFAULT_TONGUESPEED = 5;
+    private static final int DEFAULT_AGE = 5;
+    private static final double DEFAULT_TONGUESPEED = 5;
 
     /**
      * Advance Frog constructor
-     * @param name name of frog
-     * @param age age of frog
-     * @param tongueSpeed speed of frog
+     * @param name string
+     * @param age number
+     * @param tongueSpeed number
      */
     public Frog(String name, int age, double tongueSpeed) {
         this.name = name;
         this.age = age;
         this.tongueSpeed = tongueSpeed;
-        isFroglet = age < 7;
+        isFroglet = age < 7 && age > 1;
     }
 
     /**
      * Alternate advance frog constructor
-     * @param name name of frog
-     * @param ageInYears is converted into age in months of frog
-     * @param tongueSpeed speed of frog
+     * @param name string
+     * @param ageInYears number
+     * @param tongueSpeed number
      */
     public Frog(String name, double ageInYears, double tongueSpeed) {
         this(name, (int) ageInYears * 12, tongueSpeed);
@@ -38,7 +38,7 @@ public class Frog {
 
     /**
      * default constructor
-     * @param name name of frog
+     * @param name string
      */
     public Frog(String name) {
         this(name, DEFAULT_AGE, DEFAULT_TONGUESPEED);
@@ -53,34 +53,29 @@ public class Frog {
 
     /**
      * Advance method, increase age and increase/decrease speed depending on age
-     * @param addAge increase age
+     * @param addAge number
      */
     public void grow(int addAge) {
-//        System.out.print("Adding " + addAge + " months to " + age + " months:");
-        age += addAge;
-//        System.out.println(" Age Now " + age + " months");
-
-        if (age < 12) {
-//            System.out.println("Adding " + addAge + "m/s to " + tongeSpeed + "m/s:");
-            tongueSpeed += addAge;
-        } else if (age > 30) {
-//            System.out.println("Subtracting " + (age-30) + " m/s from " + tongeSpeed + "m/s:");
-            if (tongueSpeed - (age - 30) < 5) {
-                tongueSpeed = 5;
-            } else {
-                tongueSpeed -= age - 30;
+        while (addAge > 0) {
+            if (age < 12) {
+                tongueSpeed++;
             }
+            if (age >= 30) {
+                tongueSpeed -= 0.5;
+            }
+            age++;
+            addAge--;
         }
-//        System.out.println("Speed now " + tongeSpeed + "m/s");
+        isFroglet = age < 7 && age > 1;
     }
 
     /**
      * Eats and kills a fly object
-     * @param fly fly object to be eaten
+     * @param fly Fly object to be eaten
      */
     public void eat(Fly fly) {
         if (!fly.isDead()) {
-            if (fly.getSpeed() > tongueSpeed) {
+            if (fly.getSpeed() < tongueSpeed) {
                 if (fly.getMass() >= (0.5 * age)) {
                     grow();
                 }
@@ -120,6 +115,6 @@ public class Frog {
      * @param species set new species of frog
      */
     public final void setSpecies(String species) {
-        this.species = species;
+        Frog.species = species;
     }
 }
