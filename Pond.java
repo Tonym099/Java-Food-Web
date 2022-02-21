@@ -23,7 +23,7 @@ public class Pond {
         Fly fly2 = new Fly(6);
         Fly fly3 = new Fly();
 
-        frog1.setSpecies("1331 Frogs");
+        frog1.setSpecies("P Frogs");
 
         System.out.println(frog1);
 
